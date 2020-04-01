@@ -148,6 +148,7 @@
     <ClCompile Include="PPMImage.cpp" />
     <ClCompile Include="Session.cpp" />
     <ClCompile Include="SessionStorage.cpp" />
+    <ClCompile Include="History.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="ConsoleHelpers.hpp" />
@@ -160,6 +161,7 @@
     <ClInclude Include="PPMImage.hpp" />
     <ClInclude Include="Session.hpp" />
     <ClInclude Include="SessionStorage.hpp" />
+    <ClInclude Include="History.hpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

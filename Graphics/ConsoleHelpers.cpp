@@ -105,6 +105,17 @@ void ConsoleHelpers::InitializeCommand(const char* input, int& currentSessionId,
         Session* sessions = sessionStorage.getSession();
         sessions[index].ManipulateImages(commands[0]);
     }
+    else if (strcmp(commands[0], "undo") == 0)
+    {
+        if (!inputService.CheckForAnySessions(sessionStorage))
+        {
+            throw std::exception("You dont have sessions yet. Create session with open/load <file_path>");
+        }
+        
+        int index = inputService.FindSessionIndexById(sessionStorage, currentSessionId);
+        Session* sessions = sessionStorage.getSession();
+        sessions[index].UndoLastChanges();
+    }
     else if (strcmp(commands[0], "session") == 0 && strcmp(commands[1], "info") == 0)
     {
         if (!inputService.CheckForAnySessions(sessionStorage))
@@ -145,7 +156,7 @@ void ConsoleHelpers::ExtractWords(const char* input, char **& commands)
     int count = WordCount(input);
     commands = new char* [count];
     
-    for (int i = 0; i < count; i++) {
+    for (unsigned int i = 0; i < count; i++) {
 
         while (*input && !IsWordLetter(*input))
             ++input;

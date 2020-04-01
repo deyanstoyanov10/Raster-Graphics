@@ -37,6 +37,9 @@
     <Filter Include="Graphics\Image\FileFormats">
       <UniqueIdentifier>{0f23964c-c142-4728-b021-6f33bdf55230}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Graphics\History">
+      <UniqueIdentifier>{963de0e1-d119-4e77-8232-0cbd6aef643c}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="EntryPoint.cpp">
@@ -69,6 +72,9 @@
     <ClCompile Include="PGMImage.cpp">
       <Filter>Graphics\Image\FileFormats</Filter>
     </ClCompile>
+    <ClCompile Include="History.cpp">
+      <Filter>Graphics\History</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Session.hpp">
@@ -100,6 +106,9 @@
     </ClInclude>
     <ClInclude Include="PGMImage.hpp">
       <Filter>Graphics\Image\FileFormats</Filter>
+    </ClInclude>
+    <ClInclude Include="History.hpp">
+      <Filter>Graphics\History</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>
