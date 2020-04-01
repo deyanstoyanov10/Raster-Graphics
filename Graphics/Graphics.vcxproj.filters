@@ -1,0 +1,105 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="Source Files">
+      <UniqueIdentifier>{4FC737F1-C7A5-4376-A066-2A32D752A2FF}</UniqueIdentifier>
+      <Extensions>cpp;c;cc;cxx;c++;def;odl;idl;hpj;bat;asm;asmx</Extensions>
+    </Filter>
+    <Filter Include="Header Files">
+      <UniqueIdentifier>{93995380-89BD-4b04-88EB-625FBE52EBFB}</UniqueIdentifier>
+      <Extensions>h;hh;hpp;hxx;h++;hm;inl;inc;ipp;xsd</Extensions>
+    </Filter>
+    <Filter Include="Resource Files">
+      <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
+      <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
+    </Filter>
+    <Filter Include="Graphics">
+      <UniqueIdentifier>{e45ed5f0-d44f-4a58-9d64-cfdfeb29299c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Graphics\Session">
+      <UniqueIdentifier>{1e7f6823-c733-4e17-98a9-dd774455181b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Graphics\SessionStorage">
+      <UniqueIdentifier>{6aad5ceb-c0d9-40e4-84eb-11e69cd9aaf8}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Graphics\Image">
+      <UniqueIdentifier>{b1912a07-94ee-4dde-a977-fee90600e4c5}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Graphics\Engine">
+      <UniqueIdentifier>{21cdd7d6-a2aa-4e38-b4ae-2ba03aae2e18}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Graphics\ConsoleHelpers">
+      <UniqueIdentifier>{38daecb5-b4d5-445a-ad28-57a4725d9fcf}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Graphics\InputService">
+      <UniqueIdentifier>{9678d9d7-cb3f-4541-b156-cf7e39abcae1}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Graphics\Image\FileFormats">
+      <UniqueIdentifier>{0f23964c-c142-4728-b021-6f33bdf55230}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="EntryPoint.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Session.cpp">
+      <Filter>Graphics\Session</Filter>
+    </ClCompile>
+    <ClCompile Include="SessionStorage.cpp">
+      <Filter>Graphics\SessionStorage</Filter>
+    </ClCompile>
+    <ClCompile Include="Image.cpp">
+      <Filter>Graphics\Image</Filter>
+    </ClCompile>
+    <ClCompile Include="ConsoleHelpers.cpp">
+      <Filter>Graphics\ConsoleHelpers</Filter>
+    </ClCompile>
+    <ClCompile Include="Engine.cpp">
+      <Filter>Graphics\Engine</Filter>
+    </ClCompile>
+    <ClCompile Include="InputService.cpp">
+      <Filter>Graphics\InputService</Filter>
+    </ClCompile>
+    <ClCompile Include="PPMImage.cpp">
+      <Filter>Graphics\Image\FileFormats</Filter>
+    </ClCompile>
+    <ClCompile Include="PBMImage.cpp">
+      <Filter>Graphics\Image\FileFormats</Filter>
+    </ClCompile>
+    <ClCompile Include="PGMImage.cpp">
+      <Filter>Graphics\Image\FileFormats</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="Session.hpp">
+      <Filter>Graphics\Session</Filter>
+    </ClInclude>
+    <ClInclude Include="SessionStorage.hpp">
+      <Filter>Graphics\SessionStorage</Filter>
+    </ClInclude>
+    <ClInclude Include="Image.hpp">
+      <Filter>Graphics\Image</Filter>
+    </ClInclude>
+    <ClInclude Include="ConsoleHelpers.hpp">
+      <Filter>Graphics\ConsoleHelpers</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine.hpp">
+      <Filter>Graphics\Engine</Filter>
+    </ClInclude>
+    <ClInclude Include="InputService.hpp">
+      <Filter>Graphics\InputService</Filter>
+    </ClInclude>
+    <ClInclude Include="PPMImage.hpp">
+      <Filter>Graphics\Image\FileFormats</Filter>
+    </ClInclude>
+    <ClInclude Include="Pixel.hpp">
+      <Filter>Graphics\Image</Filter>
+    </ClInclude>
+    <ClInclude Include="PBMImage.hpp">
+      <Filter>Graphics\Image\FileFormats</Filter>
+    </ClInclude>
+    <ClInclude Include="PGMImage.hpp">
+      <Filter>Graphics\Image\FileFormats</Filter>
+    </ClInclude>
+  </ItemGroup>
+</Project>
