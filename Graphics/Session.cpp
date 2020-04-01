@@ -214,3 +214,18 @@ void Session::UndoLastChanges()
 	
 	this->historySize--;
 }
+
+void Session::RotateImages(const char* direction)
+{
+	addToHistory(direction);
+
+	if (strcmp(direction, "left") != 0 && strcmp(direction, "right") != 0)
+	{
+		throw std::exception("Invalid command!");
+	}
+
+	for (unsigned int i = 0; i < size; i++)
+	{
+		this->images[i]->Rotate(direction);
+	}
+}

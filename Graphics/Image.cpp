@@ -103,6 +103,10 @@ void Image::Negative()
 {
 }
 
+void Image::Rotate(const char* direction)
+{
+}
+
 void Image::copy(const Image& image)
 {
 	setPath(image.path);

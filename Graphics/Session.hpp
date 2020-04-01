@@ -26,6 +26,7 @@ public:
 	void ManipulateImages(const char* command);
 	void SessionInfo();
 	void UndoLastChanges();
+	void RotateImages(const char* direction);
 private:
 	void addToHistory(const char* beforeChanges);
 	void copy(const Session& session);

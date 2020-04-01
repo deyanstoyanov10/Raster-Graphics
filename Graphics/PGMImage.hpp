@@ -16,11 +16,13 @@ public:
 	{
 		return new PGMImage(*this);
 	}
-	void load(std::istream& in);
-	void save(std::ostream& out);
+	void load(std::istream& in) override;
+	void save(std::ostream& out) override;
 
-	void Negative();
+	void Negative() override;
+	void Rotate(const char* direction) override;
 private:
+	void rotateRight();
 	void copy(const PGMImage& image);
 	void del();
 private:

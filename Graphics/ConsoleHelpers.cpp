@@ -116,6 +116,16 @@ void ConsoleHelpers::InitializeCommand(const char* input, int& currentSessionId,
         Session* sessions = sessionStorage.getSession();
         sessions[index].UndoLastChanges();
     }
+    else if (strcmp(commands[0], "rotate") == 0 && (strcmp(commands[1], "left") == 0 || strcmp(commands[1], "right") == 0))
+    {
+        if (!inputService.CheckForAnySessions(sessionStorage))
+        {
+            throw std::exception("You dont have sessions yet. Create session with open/load <file_path>");
+        }
+        int index = inputService.FindSessionIndexById(sessionStorage, currentSessionId);
+        Session* sessions = sessionStorage.getSession();
+        sessions[index].RotateImages(commands[1]);
+    }
     else if (strcmp(commands[0], "session") == 0 && strcmp(commands[1], "info") == 0)
     {
         if (!inputService.CheckForAnySessions(sessionStorage))

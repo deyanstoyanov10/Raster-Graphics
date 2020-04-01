@@ -23,12 +23,14 @@ public:
 		return new PPMImage(*this);
 	}
 
-	void load(std::istream& in);
-	void save(std::ostream& out);
+	void load(std::istream& in) override;
+	void save(std::ostream& out) override;
 	
-	void GrayScale();
-	void Negative();
+	void GrayScale() override;
+	void Negative() override;
+	void Rotate(const char* direction) override;
 private:
+	void rotateRight();
 	void copy(const PPMImage& image);
 	void del();
 

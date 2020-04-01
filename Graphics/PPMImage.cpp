@@ -119,6 +119,66 @@ void PPMImage::Negative()
 	}
 }
 
+void PPMImage::Rotate(const char* direction)
+{
+	if (strcmp(direction, "left") == 0)
+	{
+		for (unsigned int i = 0; i < 3; i++)
+		{
+			rotateRight();
+		}
+	}
+	else if (strcmp(direction, "right") == 0)
+	{
+		rotateRight();
+	}
+	else
+	{
+		throw std::exception("Invalid command!");
+	}
+}
+
+void PPMImage::rotateRight()
+{
+	Pixel** newPixels = new Pixel * [cols];
+	for (unsigned int i = 0; i < cols; i++)
+	{
+		newPixels[i] = new Pixel[rows];
+	}
+
+	for (unsigned int i = 0; i < rows; i++)
+	{
+		for (unsigned int j = 0; j < cols; j++)
+		{
+			newPixels[j][i] = pixels[i][j];
+		}
+	}
+
+	int temp = rows;
+	this->rows = this->cols;
+	this->cols = temp;
+
+	for (unsigned int i = 0; i < cols; i++)
+	{
+		Pixel* arrTemp = new Pixel[rows];
+		for (unsigned int j = 0; j < rows; j++)
+		{
+			arrTemp[j] = newPixels[i][j];
+		}
+
+		for (unsigned index = 0; index < rows; index++)
+		{
+			newPixels[i][index] = arrTemp[rows - 1 - index];
+		}
+	}
+
+	for (unsigned int i = 0; i < cols; i++)
+		delete[] pixels[i];
+	delete[] pixels;
+
+	this->pixels = newPixels;
+}
+
 void PPMImage::copy(const PPMImage& image)
 {
 	this->setPath(image.path);

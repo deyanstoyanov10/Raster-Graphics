@@ -20,7 +20,9 @@ public:
 	void save(std::ostream& out) override;
 
 	void Negative() override;
+	void Rotate(const char* direction) override;
 private:
+	void rotateRight();
 	void copy(const PBMImage& image);
 	void del();
 private:

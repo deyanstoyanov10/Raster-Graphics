@@ -23,6 +23,7 @@ public:
 	virtual void GrayScale();
 	virtual void Monochrome();
 	virtual void Negative();
+	virtual void Rotate(const char* direction);
 private:
 	void copy(const Image& image);
 	void del();
