@@ -79,6 +79,27 @@ void PGMImage::save(std::ostream& out)
 	}
 }
 
+void PGMImage::saveas(const char* direction)
+{
+	std::fstream fout(direction, std::ios::out);
+
+	if (!fout.is_open())
+	{
+		throw new std::exception("Cannot open file");
+	}
+	this->save(fout);
+
+	fout.close();
+}
+
+void PGMImage::collageHorizontal(std::ostream& out, int index)
+{
+	for (unsigned int i = 0; i < cols; i++)
+	{
+		out << this->pixels[index][i];
+	}
+}
+
 void PGMImage::Negative()
 {
 	for (unsigned int i = 0; i < this->rows; i++)

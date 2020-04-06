@@ -32,6 +32,52 @@ Session::~Session()
 	del();
 }
 
+void Session::compareImages(const char* firstImage, const char* secondImage, int& indexOne, int& indexTwo)
+{
+	bool checkOne = false;
+	bool checkTwo = false;
+	int firstIndex = 0, secondIndex = 0;
+
+	for (unsigned int i = 0; i < size; i++)
+	{
+		if (strcmp(this->images[i]->getFileName(), firstImage) == 0)
+		{
+			firstIndex = i;
+			checkOne = true;
+			break;
+		}
+	}
+
+	
+	for (unsigned int i = 0; i < size; i++)
+	{
+		if (strcmp(this->images[i]->getFileName(), secondImage) == 0)
+		{
+			secondIndex = i;
+			checkTwo = true;
+			break;
+		}
+	}
+
+	indexOne = firstIndex;
+	indexTwo = secondIndex;
+
+	if (checkOne == false || checkTwo == false)
+	{
+		throw std::exception("Images doesn't exist");
+	}
+
+	if (strcmp(this->images[firstIndex]->getMagicNumber(), this->images[secondIndex]->getMagicNumber()) != 0)
+	{
+		throw std::exception("Images doesn't match");
+	}
+
+	if ((this->images[firstIndex]->getRows() != this->images[secondIndex]->getRows()) || (this->images[firstIndex]->getCols() != this->images[secondIndex]->getCols()))
+	{
+		throw std::exception("Images size doesn't match");
+	}
+}
+
 void Session::addToHistory(const char* beforeChanges)
 {
 	if (historySize >= historyCapacity)
@@ -227,5 +273,66 @@ void Session::RotateImages(const char* direction)
 	for (unsigned int i = 0; i < size; i++)
 	{
 		this->images[i]->Rotate(direction);
+	}
+}
+
+void Session::MakeCollage(const char* direction, const char* firstImage, const char* secondImage, const char* outImage)
+{
+	int indexOne = 0;
+	int indexTwo = 0;
+
+	if (strcmp(direction, "horizontal") == 0)
+	{
+		compareImages(firstImage, secondImage, indexOne, indexTwo);
+		std::fstream fout(direction, std::ios::out);
+
+		if (!fout.is_open())
+		{
+			throw new std::exception("Cannot open file");
+		}
+		const char* magicNumber = this->images[indexOne]->getMagicNumber();
+		for (unsigned int i = 0; i < strlen(magicNumber); i++)
+		{
+			fout << magicNumber[i];
+		}
+		fout << std::endl;
+		fout << this->images[indexOne]->getCols() + this->images[indexTwo]->getCols() << " " << this->images[indexOne]->getRows() << std::endl;
+		fout << this->images[indexOne]->getColorMax() << std::endl;
+
+		for (unsigned int i = 0; i < this->images[indexOne]->getRows(); i++)
+		{
+			this->images[indexOne]->collageHorizontal(fout, i);
+			this->images[indexTwo]->collageHorizontal(fout, i);
+			fout << std::endl;
+		}
+		fout.close();
+	}
+	else if (strcmp(direction, "vertical") == 0)
+	{
+		compareImages(firstImage, secondImage, indexOne, indexTwo);
+		std::fstream fout(direction, std::ios::out);
+
+		if (!fout.is_open())
+		{
+			throw new std::exception("Cannot open file");
+		}
+
+		const char* magicNumber = this->images[indexOne]->getMagicNumber();
+		for (unsigned int i = 0; i < strlen(magicNumber); i++)
+		{
+			fout << magicNumber[i];
+		}
+		fout << std::endl;
+		fout << this->images[indexOne]->getCols()<< " " << this->images[indexOne]->getRows() + this->images[indexTwo]->getRows() << std::endl;
+		fout << this->images[indexOne]->getColorMax() << std::endl;
+
+		this->images[indexOne]->save(fout);
+		this->images[indexTwo]->save(fout);
+
+		fout.close();
+	}
+	else
+	{
+		throw std::exception("Invalid command");
 	}
 }

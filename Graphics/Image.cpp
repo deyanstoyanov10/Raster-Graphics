@@ -8,24 +8,6 @@ Image::Image(const char* _path, const char* _magicNumber, unsigned int _rows, un
 	setMagicNumber(_magicNumber);
 }
 
-//Image::Image(const Image& image) : Image()
-//{
-//	if (this != &image)
-//	{
-//		copy(image);
-//	}
-//}
-//
-//Image& Image::operator=(const Image& image)
-//{
-//	if (this != &image)
-//	{
-//		del();
-//		copy(image);
-//	}
-//	return *this;
-//}
-
 Image::~Image()
 {
 	del();
@@ -59,6 +41,35 @@ void Image::setMagicNumber(const char* magicNumber)
 
 	this->magicNumber = new char[strlen(magicNumber) + 1];
 	strcpy(this->magicNumber, magicNumber);
+}
+
+char* Image::getFileName() const
+{
+	const char* path = this->getPath();
+	int index = 0;
+	int pathLength = strlen(path);
+
+	for (int i = pathLength - 1; i >= 0; i--)
+	{
+		if (path[i] == '\\' || path[i] == '/')
+		{
+			break;
+		}
+		index = i;
+	}
+
+	char* output = new char[pathLength - index + 1];
+
+	int j = 0;
+	while (path[index])
+	{
+		output[j] = path[index];
+		j++;
+		index++;
+	}
+	output[j] = '\0';
+
+	return output;
 }
 
 void Image::PrintFileName()

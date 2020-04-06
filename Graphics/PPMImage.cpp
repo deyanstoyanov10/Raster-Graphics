@@ -78,6 +78,27 @@ void PPMImage::save(std::ostream& out)
 	}
 }
 
+void PPMImage::saveas(const char* direction)
+{
+	std::fstream fout(direction, std::ios::out);
+
+	if (!fout.is_open())
+	{
+		throw new std::exception("Cannot open file");
+	}
+	this->save(fout);
+
+	fout.close();
+}
+
+void PPMImage::collageHorizontal(std::ostream& out, int index)
+{
+	for (unsigned int i = 0; i < cols; i++)
+	{
+		out << this->pixels[index][i].red << this->pixels[index][i].green << this->pixels[index][i].blue;
+	}
+}
+
 void PPMImage::GrayScale()
 {
 	/*if (CheckForGrayScaledImage() == true)

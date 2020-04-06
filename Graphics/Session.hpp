@@ -27,7 +27,9 @@ public:
 	void SessionInfo();
 	void UndoLastChanges();
 	void RotateImages(const char* direction);
+	void MakeCollage(const char* direction, const char* firstImage, const char* secondImage, const char* outImage);
 private:
+	void compareImages(const char* firstImage, const char* secondImage, int& indexOne, int& indexTwo);
 	void addToHistory(const char* beforeChanges);
 	void copy(const Session& session);
 	void del();

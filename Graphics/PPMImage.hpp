@@ -25,7 +25,9 @@ public:
 
 	void load(std::istream& in) override;
 	void save(std::ostream& out) override;
-	
+	void saveas(const char* direction) override;
+	void collageHorizontal(std::ostream& out, int index) override;
+
 	void GrayScale() override;
 	void Negative() override;
 	void Rotate(const char* direction) override;
