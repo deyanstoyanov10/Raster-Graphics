@@ -9,6 +9,9 @@
 class ConsoleHelpers
 {
 public:
+	ConsoleHelpers();
+	~ConsoleHelpers();
+
 	void ReadCommands(SessionStorage& sessionStorage, int& currentSessionId);
 	void RenderConsole();
 private:
@@ -18,5 +21,7 @@ private:
 	void ExtractWords(const char* input, char**& commands);
 	int WordCount(const char* text);
 	bool IsWordLetter(char c);
+private:
+	InputService* inputService;
 };
 #endif // !__CONSOLEHELPERS_HPP

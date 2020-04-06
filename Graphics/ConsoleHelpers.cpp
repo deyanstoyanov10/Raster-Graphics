@@ -1,5 +1,15 @@
 #include "ConsoleHelpers.hpp"
 
+ConsoleHelpers::ConsoleHelpers()
+{
+    this->inputService = new InputService();
+}
+
+ConsoleHelpers::~ConsoleHelpers()
+{
+    delete inputService;
+}
+
 void ConsoleHelpers::ReadCommands(SessionStorage& sessionStorage, int& currentSessionId)
 {
 	char input[BUFFER];
@@ -30,48 +40,29 @@ void ConsoleHelpers::InitializeCommand(const char* input, int& currentSessionId,
     char** commands;
     ExtractWords(input, commands);
     
-    InputService inputService = InputService();
-    
     if (strcmp(commands[0], "load") == 0)
     {
-        sessionStorage.AddSession(inputService.CreateNewSession(commands[1], sessionStorage.getIndex()));
+        sessionStorage.AddSession(this->inputService->CreateNewSession(commands[1], sessionStorage.getIndex()));
         currentSessionId = sessionStorage.getIndex();
         std::cout << "Session with ID: " << sessionStorage.GetSessionId(sessionStorage.getIndex() - 1) << std::endl;
     }
     else if (strcmp(commands[0], "close") == 0)
     {
-        if (!inputService.CheckForAnySessions(sessionStorage))
-        {
-            throw std::exception("You dont have sessions yet. Create session with open/load <file_path>");
-        }
-        else if (!inputService.CheckForRemovingImage(sessionStorage, currentSessionId))
-        {
-            throw std::exception("You can't remove images from that session");
-        }
+        this->inputService->CheckForAnySessions(sessionStorage);
+        this->inputService->CheckForRemovingImage(sessionStorage, currentSessionId);
         
-        int index = inputService.FindSessionIndexById(sessionStorage, currentSessionId);
-        Session* sessions = sessionStorage.getSession();
-        sessions[index].RemoveImage();
-
+        this->inputService->RemoveImages(sessionStorage, currentSessionId);
         std::cout << "Successfully closed " << std::endl; //TODO: add file name
     }
     else if (strcmp(commands[0], "save") == 0)
     {
-        if (!inputService.CheckForAnySessions(sessionStorage))
-        {
-            throw std::exception("You dont have sessions yet. Create session with open/load <file_path>");
-        }
-        int index = inputService.FindSessionIndexById(sessionStorage, currentSessionId);
-        Session* sessions = sessionStorage.getSession();
-
-        inputService.SaveFile(sessions[index]);
+        this->inputService->CheckForAnySessions(sessionStorage);
+        this->inputService->SaveFile(sessionStorage, currentSessionId);
     }
     else if (strcmp(commands[0], "saveas") == 0)
     {
-        if (!inputService.CheckForAnySessions(sessionStorage))
-        {
-            throw std::exception("You dont have sessions yet. Create session with open/load <file_path>");
-        }
+        this->inputService->CheckForAnySessions(sessionStorage);
+        this->inputService->SaveAsFile(sessionStorage, currentSessionId, commands[1]);
     }
     else if (strcmp(commands[0], "help") == 0)
     {
@@ -84,76 +75,41 @@ void ConsoleHelpers::InitializeCommand(const char* input, int& currentSessionId,
     }
     else if (strcmp(commands[0], "add") == 0)
     {
-        if (!inputService.CheckForAnySessions(sessionStorage))
-        {
-            throw std::exception("You dont have sessions yet. Create session with open/load <file_path>");
-        }
-        Image* image = inputService.CreateImage(commands[1]);
-
-        int index = inputService.FindSessionIndexById(sessionStorage, currentSessionId);
-        Session* sessions = sessionStorage.getSession();
-        sessions[index].AddImage(image);
+        this->inputService->CheckForAnySessions(sessionStorage);
+        this->inputService->AddImages(sessionStorage, currentSessionId, commands[1]);
     }
     else if (strcmp(commands[0], "grayscale") == 0 || strcmp(commands[0], "monochrome") == 0 || strcmp(commands[0], "negative") == 0)
     {
-        if (!inputService.CheckForAnySessions(sessionStorage))
-        {
-            throw std::exception("You dont have sessions yet. Create session with open/load <file_path>");
-        }
-
-        int index = inputService.FindSessionIndexById(sessionStorage, currentSessionId);
-        Session* sessions = sessionStorage.getSession();
-        sessions[index].ManipulateImages(commands[0]);
+        this->inputService->CheckForAnySessions(sessionStorage);
+        this->inputService->ManipulateImages(sessionStorage, currentSessionId, commands[0]);
     }
     else if (strcmp(commands[0], "undo") == 0)
     {
-        if (!inputService.CheckForAnySessions(sessionStorage))
-        {
-            throw std::exception("You dont have sessions yet. Create session with open/load <file_path>");
-        }
-        
-        int index = inputService.FindSessionIndexById(sessionStorage, currentSessionId);
-        Session* sessions = sessionStorage.getSession();
-        sessions[index].UndoLastChanges();
+        this->inputService->CheckForAnySessions(sessionStorage);
+        this->inputService->Undo(sessionStorage, currentSessionId);
     }
     else if (strcmp(commands[0], "rotate") == 0 && (strcmp(commands[1], "left") == 0 || strcmp(commands[1], "right") == 0))
     {
-        if (!inputService.CheckForAnySessions(sessionStorage))
-        {
-            throw std::exception("You dont have sessions yet. Create session with open/load <file_path>");
-        }
-        int index = inputService.FindSessionIndexById(sessionStorage, currentSessionId);
-        Session* sessions = sessionStorage.getSession();
-        sessions[index].RotateImages(commands[1]);
+        this->inputService->CheckForAnySessions(sessionStorage);
+        this->inputService->RotateImages(sessionStorage, currentSessionId, commands[1]);
+    }
+    else if (strcmp(commands[0], "collage") == 0)
+    {
+        this->inputService->CheckForAnySessions(sessionStorage);
+        this->inputService->CollageMaker(sessionStorage, currentSessionId, commands[1], commands[2], commands[3], commands[4]);
     }
     else if (strcmp(commands[0], "session") == 0 && strcmp(commands[1], "info") == 0)
     {
-        if (!inputService.CheckForAnySessions(sessionStorage))
-        {
-            throw std::exception("You dont have sessions yet. Create session with open/load <file_path>");
-        }
-        int index = inputService.FindSessionIndexById(sessionStorage, currentSessionId);
-        Session* sessions = sessionStorage.getSession();
-        sessions[index].SessionInfo();
+        this->inputService->CheckForAnySessions(sessionStorage);
+        this->inputService->SessionInfo(sessionStorage, currentSessionId);
     }
     else if (strcmp(commands[0], "switch") == 0)
     {
-        if (!inputService.CheckForAnySessions(sessionStorage))
-        {
-            throw std::exception("You dont have sessions yet. Create session with open/load <file_path>");
-        }
-        int sessionId = commands[1][0] - '0';
-        int index = inputService.FindSessionIndexById(sessionStorage, sessionId);
-        
-        if (index == - 1)
-        {
-            throw std::exception("Invalid session Id");
-        }
-
-        currentSessionId = sessionId;
-        std::cout << "You switched to session with ID : " << currentSessionId << "!" << std::endl;
-        Session* sessions = sessionStorage.getSession();
-        sessions[index].SessionInfo();
+        this->inputService->CheckForAnySessions(sessionStorage);
+        int newSessionId = commands[1][0] - '0';
+        this->inputService->CheckForAnySessions(newSessionId);
+        this->inputService->SwitchSession(currentSessionId, newSessionId);
+        this->inputService->SessionInfo(sessionStorage, currentSessionId);
     }
     else
     {

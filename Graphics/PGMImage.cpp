@@ -51,15 +51,6 @@ void PGMImage::load(std::istream& in)
 
 void PGMImage::save(std::ostream& out)
 {
-	const char* magicNumber = this->magicNumber;
-	for (unsigned int i = 0; i < strlen(magicNumber); i++)
-	{
-		out << magicNumber[i];
-	}
-	out << std::endl;
-	out << this->cols << " " << this->rows << std::endl;
-	out << this->colorMax << std::endl;
-
 	for (unsigned int i = 0; i < this->rows; i++)
 	{
 		for (unsigned int j = 0; j < this->cols; j++)
@@ -87,6 +78,11 @@ void PGMImage::saveas(const char* direction)
 	{
 		throw new std::exception("Cannot open file");
 	}
+
+	const char* magicNumber = this->magicNumber;
+	fout << magicNumber << std::endl;
+	fout << this->cols << " " << this->rows << std::endl;
+	fout << this->colorMax << std::endl;
 	this->save(fout);
 
 	fout.close();
@@ -96,7 +92,14 @@ void PGMImage::collageHorizontal(std::ostream& out, int index)
 {
 	for (unsigned int i = 0; i < cols; i++)
 	{
-		out << this->pixels[index][i];
+		if (i != this->cols - 1)
+		{
+			out << pixels[index][i] << " ";
+		}
+		else
+		{
+			out << pixels[index][i];
+		}
 	}
 }
 

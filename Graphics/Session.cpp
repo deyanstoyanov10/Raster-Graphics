@@ -169,8 +169,7 @@ void Session::AddImage(Image* image)
 	this->images[size] = image;
 
 	std::cout << "Image ";
-	image[size].PrintFileName();
-	std::cout << " added" << std::endl;
+	std::cout << "added" << std::endl;
 
 	this->size++;
 }
@@ -284,7 +283,7 @@ void Session::MakeCollage(const char* direction, const char* firstImage, const c
 	if (strcmp(direction, "horizontal") == 0)
 	{
 		compareImages(firstImage, secondImage, indexOne, indexTwo);
-		std::fstream fout(direction, std::ios::out);
+		std::fstream fout(outImage, std::ios::out);
 
 		if (!fout.is_open())
 		{
@@ -302,6 +301,7 @@ void Session::MakeCollage(const char* direction, const char* firstImage, const c
 		for (unsigned int i = 0; i < this->images[indexOne]->getRows(); i++)
 		{
 			this->images[indexOne]->collageHorizontal(fout, i);
+			fout << " ";
 			this->images[indexTwo]->collageHorizontal(fout, i);
 			fout << std::endl;
 		}
@@ -310,7 +310,7 @@ void Session::MakeCollage(const char* direction, const char* firstImage, const c
 	else if (strcmp(direction, "vertical") == 0)
 	{
 		compareImages(firstImage, secondImage, indexOne, indexTwo);
-		std::fstream fout(direction, std::ios::out);
+		std::fstream fout(outImage, std::ios::out);
 
 		if (!fout.is_open())
 		{

@@ -50,15 +50,6 @@ void PPMImage::load(std::istream& in)
 
 void PPMImage::save(std::ostream& out)
 {
-	const char* magicNumber = this->magicNumber;
-	for (unsigned int i = 0; i < strlen(magicNumber); i++)
-	{
-		out << magicNumber[i];
-	}
-	out << std::endl;
-	out << this->cols << " " << this->rows << std::endl;
-	out << this->colorMax << std::endl;
-
 	for (unsigned int i = 0; i < this->rows; i++)
 	{
 		for (unsigned int j = 0; j < this->cols; j++)
@@ -81,11 +72,16 @@ void PPMImage::save(std::ostream& out)
 void PPMImage::saveas(const char* direction)
 {
 	std::fstream fout(direction, std::ios::out);
-
+	
 	if (!fout.is_open())
 	{
 		throw new std::exception("Cannot open file");
 	}
+
+	const char* magicNumber = this->magicNumber;
+	fout << magicNumber << std::endl;
+	fout << this->cols << " " << this->rows << std::endl;
+	fout << this->colorMax << std::endl;
 	this->save(fout);
 
 	fout.close();
@@ -95,7 +91,14 @@ void PPMImage::collageHorizontal(std::ostream& out, int index)
 {
 	for (unsigned int i = 0; i < cols; i++)
 	{
-		out << this->pixels[index][i].red << this->pixels[index][i].green << this->pixels[index][i].blue;
+		if (i != this->cols - 1)
+		{
+			out << pixels[index][i].red << " " << pixels[index][i].green << " " << pixels[index][i].blue << " ";
+		}
+		else
+		{
+			out << pixels[index][i].red << " " << pixels[index][i].green << " " << pixels[index][i].blue;
+		}
 	}
 }
 
