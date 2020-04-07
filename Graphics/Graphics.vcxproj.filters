@@ -40,6 +40,9 @@
     <Filter Include="Graphics\History">
       <UniqueIdentifier>{963de0e1-d119-4e77-8232-0cbd6aef643c}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Graphics\Libraries">
+      <UniqueIdentifier>{fe24293b-7590-47b5-9f13-b8665b7870de}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="EntryPoint.cpp">
@@ -75,6 +78,9 @@
     <ClCompile Include="History.cpp">
       <Filter>Graphics\History</Filter>
     </ClCompile>
+    <ClCompile Include="String.cpp">
+      <Filter>Graphics\Libraries</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Session.hpp">
@@ -109,6 +115,9 @@
     </ClInclude>
     <ClInclude Include="History.hpp">
       <Filter>Graphics\History</Filter>
+    </ClInclude>
+    <ClInclude Include="String.hpp">
+      <Filter>Graphics\Libraries</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

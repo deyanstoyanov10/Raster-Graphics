@@ -56,16 +56,17 @@ void PBMImage::save(std::ostream& out)
 	{
 		for (unsigned int j = 0; j < this->cols; j++)
 		{
-
-			if (j != this->cols - 1)
+			if (out.good())
 			{
-				out << pixels[i][j] << " ";
+				if (j != this->cols - 1)
+				{
+					out << pixels[i][j] << " ";
+				}
+				else
+				{
+					out << pixels[i][j];
+				}
 			}
-			else
-			{
-				out << pixels[i][j];
-			}
-
 		}
 		out << std::endl;
 	}
@@ -93,13 +94,16 @@ void PBMImage::collageHorizontal(std::ostream& out, int index)
 {
 	for (unsigned int i = 0; i < cols; i++)
 	{
-		if (i != this->cols - 1)
+		if (out.good())
 		{
-			out << pixels[index][i] << " ";
-		}
-		else
-		{
-			out << pixels[index][i];
+			if (i != this->cols - 1)
+			{
+				out << pixels[index][i] << " ";
+			}
+			else
+			{
+				out << pixels[index][i];
+			}
 		}
 	}
 }

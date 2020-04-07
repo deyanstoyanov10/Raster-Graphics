@@ -149,6 +149,7 @@
     <ClCompile Include="Session.cpp" />
     <ClCompile Include="SessionStorage.cpp" />
     <ClCompile Include="History.cpp" />
+    <ClCompile Include="String.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="ConsoleHelpers.hpp" />
@@ -162,6 +163,7 @@
     <ClInclude Include="Session.hpp" />
     <ClInclude Include="SessionStorage.hpp" />
     <ClInclude Include="History.hpp" />
+    <ClInclude Include="String.hpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

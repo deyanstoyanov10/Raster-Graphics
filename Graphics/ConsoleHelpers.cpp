@@ -38,7 +38,7 @@ void ConsoleHelpers::RenderHelp()
 void ConsoleHelpers::InitializeCommand(const char* input, int& currentSessionId, SessionStorage& sessionStorage)
 {
     char** commands;
-    ExtractWords(input, commands);
+    int count = ExtractWords(input, commands);
     
     if (strcmp(commands[0], "load") == 0)
     {
@@ -115,9 +115,13 @@ void ConsoleHelpers::InitializeCommand(const char* input, int& currentSessionId,
     {
         throw std::exception("Wrong function. Type help for more information");
     }
+
+    for (int i = 0; i < count; i++)
+        delete[] commands[i];
+    delete[] commands;
 }
 
-void ConsoleHelpers::ExtractWords(const char* input, char **& commands)
+int ConsoleHelpers::ExtractWords(const char* input, char **& commands)
 {
     int count = WordCount(input);
     commands = new char* [count];
@@ -139,6 +143,8 @@ void ConsoleHelpers::ExtractWords(const char* input, char **& commands)
             commands[i][len] = '\0';
         }
     }
+
+    return count;
 }
 
 int ConsoleHelpers::WordCount(const char* text)
