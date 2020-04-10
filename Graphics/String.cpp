@@ -76,7 +76,7 @@ String& String::operator+=(char str)
 {
 	unsigned int newLength = length + 1;
 	char* newStr = new char[newLength + 1];
-
+	
 	for (unsigned int i = 0; i < length; i++)
 	{
 		newStr[i] = string[i];
@@ -146,7 +146,7 @@ char String::operator[](unsigned index) const
 {
 	if (index >= length)
 	{
-		throw std::exception("Index was outside the bounds of the array.");
+		throw std::out_of_range("Index was outside the bounds of the array.");
 	}
 
 	return string[index];
@@ -156,7 +156,7 @@ char& String::operator[](unsigned index)
 {
 	if (index >= length)
 	{
-		throw std::exception("Index was outside the bounds of the array.");
+		throw std::out_of_range("Index was outside the bounds of the array.");
 	}
 
 	return string[index];
