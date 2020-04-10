@@ -81,9 +81,6 @@
     <ClCompile Include="String.cpp">
       <Filter>Graphics\Libraries</Filter>
     </ClCompile>
-    <ClCompile Include="Vector.cpp">
-      <Filter>Graphics\Libraries</Filter>
-    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Session.hpp">
