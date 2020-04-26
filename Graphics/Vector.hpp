@@ -21,6 +21,7 @@ public:
 	const unsigned int count() const;
 	void push_back(Type type);
 	void pop_back();
+	void deleteAt(unsigned index);
 	Type at(unsigned int index) const;
 	Type& at(unsigned int index);
 	Type operator[](unsigned int index) const;
@@ -166,6 +167,21 @@ void Vector<Type>::pop_back()
 	{
 		this->size--;
 	}
+}
+
+template<class Type>
+inline void Vector<Type>::deleteAt(unsigned index)
+{
+	if (index >= size)
+	{
+		throw std::out_of_range("Index was outside the bounds of the array.");
+	}
+
+	for (unsigned int i = index; i < size - 1; i++)
+	{
+		container[i] = container[i + 1];
+	}
+	this->size--;
 }
 
 template<class Type>

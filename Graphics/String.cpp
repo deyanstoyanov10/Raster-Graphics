@@ -8,14 +8,6 @@ String::String()
 	strcpy(this->string, "");
 }
 
-String::String(char str)
-	:length(1)
-{
-	this->string = new char[2];
-	this->string[0] = str;
-	this->string[1] = '\0';
-}
-
 String::String(const char* str)
 	:length(strlen(str))
 {
@@ -47,6 +39,137 @@ void String::setStr(const char* str)
 	strcpy(this->string, str);
 }
 
+void String::serialize(std::ofstream& ofs)
+{
+	if (!ofs.is_open())
+	{
+		throw std::exception("Problem has occured.");
+	}
+
+	unsigned int length = strlen(string);
+	ofs.write((const char*)&length, sizeof(length));
+	ofs.write(string, length * sizeof(char));
+}
+
+void String::deserialize(std::ifstream& ifs)
+{
+	if (!ifs.is_open())
+	{
+		throw std::exception("Problem has occured.");
+	}
+
+	unsigned int length = 0;
+	ifs.read((char*)&length, sizeof(length));
+	char* str = new char[length + 1];
+	ifs.read(str, length);
+	str[length] = '\0';
+
+
+	delete[] string;
+	string = str;
+	this->length = length;
+}
+
+Vector<String> String::strSplit(char splitter, const char* str)
+{
+	Vector<String> words;
+
+	int count = wordsCount(splitter, str);
+	for (int i = 0; i < count; i++) {
+
+		while (*str && !isCharLetter(splitter, *str))
+			++str;
+		if (*str) {
+			const char* start = str;
+			while (isCharLetter(splitter, *str))
+				++str;
+
+			int len = str - start;
+			char* s = new char[len + 1];
+
+			for (int pos = 0; pos < len; ++pos)
+				s[pos] = start[pos];
+			s[len] = '\0';
+
+			String word = s;
+			words.push_back(word);
+			delete[] s;
+		}
+	}
+
+	return words;
+}
+
+bool String::contains(char c)
+{
+	bool contains = false;
+
+	for (unsigned int i = 0; i < length; i++)
+	{
+		if (string[i] == c)
+		{
+			contains = true;
+			break;
+		}
+	}
+
+	return contains;
+}
+
+int String::parseToInt()
+{
+	int number = std::atoi(string);
+	return number;
+}
+
+float String::parseToFloat()
+{
+	float temp = ::atof(string);
+	return temp;
+}
+
+void String::repeat(const String& str, unsigned n)
+{
+	for (unsigned i = 0; i < n; i++)
+	{
+		std::cout << str;
+	}
+	//std::cout << std::endl;
+}
+
+int String::wordsCount(char splitter, const char* str)
+{
+	int count = 0;
+	while (*str) {
+		while (*str && !isCharLetter(splitter, *str)) {
+			++str;
+		}
+		if (*str) {
+			++count;
+		}
+		while (isCharLetter(splitter, *str)) {
+			++str;
+		}
+	}
+
+	return count;
+}
+
+bool String::isCharLetter(char splitter, char c)
+{
+	if (c == splitter)
+	{
+		return false;
+	}
+
+	if (c != '\0')
+	{
+		return true;
+	}
+
+	return false;
+}
+
 void String::copy(const String& str)
 {
 	this->string = new char[strlen(str.string) + 1];
@@ -71,25 +194,6 @@ String& String::operator=(const String& str)
 }
 
 // Operator +=
-
-String& String::operator+=(char str)
-{
-	unsigned int newLength = length + 1;
-	char* newStr = new char[newLength + 1];
-	
-	for (unsigned int i = 0; i < length; i++)
-	{
-		newStr[i] = string[i];
-	}
-	newStr[newLength - 1] = str;
-	newStr[newLength] = '\0';
-
-	delete[] string;
-	this->length = newLength;
-	this->string = newStr;
-
-	return *this;
-}
 
 String& String::operator+=(const char* str)
 {
@@ -170,19 +274,9 @@ String operator+(const String& strLeft, const String& strRight)
 	return String(strLeft) += strRight; // fix
 }
 
-String operator+(const String& strLeft, char strRight)
-{
-	return String(strLeft) += strRight; // fix
-}
-
 String operator+(const String& strLeft, const char* strRight)
 {
 	return String(strLeft) += strRight; // fix
-}
-
-String operator+(char strLeft, const String& strRight)
-{
-	return String(strLeft) += strRight;
 }
 
 String operator+(const char* strLeft, const String& strRight)
@@ -210,19 +304,9 @@ bool operator==(const String& strLeft, const String& strRight)
 	return count == len;
 }
 
-bool operator==(const String& strLeft, char strRight)
-{
-	return strLeft == String(strRight);
-}
-
 bool operator==(const String& strLeft, const char* strRight)
 {
 	return strLeft == String(strRight);
-}
-
-bool operator==(char strLeft, const String& strRight)
-{
-	return String(strLeft) == strRight;
 }
 
 bool operator==(const char* strLeft, const String& strRight)
@@ -238,17 +322,7 @@ bool operator!=(const String& strLeft, const String& strRight)
 	return !(strLeft == strRight);
 }
 
-bool operator!=(const String& strLeft, char strRight)
-{
-	return !(strLeft == strRight);
-}
-
 bool operator!=(const String& strLeft, const char* strRight)
-{
-	return !(strLeft == strRight);
-}
-
-bool operator!=(char strLeft, const String& strRight)
 {
 	return !(strLeft == strRight);
 }
@@ -266,8 +340,13 @@ std::ostream& operator<<(std::ostream& out, const String& s)
 	return out;
 }
 
-std::istream& operator>>(std::istream& in, const String& s)
+std::istream& operator>>(std::istream& in, String& s)
 {
-	in.getline(s.string, BUFFER);
+	char input[BUFFER];
+	in.getline(input, BUFFER);
+
+	String inp = input;
+	s = inp;
+
 	return in;
 }

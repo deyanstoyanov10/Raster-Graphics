@@ -52,7 +52,7 @@ void ConsoleHelpers::InitializeCommand(const char* input, int& currentSessionId,
         this->inputService->CheckForRemovingImage(sessionStorage, currentSessionId);
         
         this->inputService->RemoveImages(sessionStorage, currentSessionId);
-        std::cout << "Successfully closed " << std::endl; //TODO: add file name
+        std::cout << "Successfully closed " << std::endl;
     }
     else if (strcmp(commands[0], "save") == 0)
     {
@@ -113,6 +113,9 @@ void ConsoleHelpers::InitializeCommand(const char* input, int& currentSessionId,
     }
     else
     {
+        for (int i = 0; i < count; i++)
+            delete[] commands[i];
+        delete[] commands;
         throw std::exception("Wrong function. Type help for more information");
     }
 

@@ -11,7 +11,7 @@ PGMImage::PGMImage(const char* _path, const char* _magicNumber, unsigned int _ro
 	}
 }
 
-PGMImage::PGMImage(const PGMImage& image) : PGMImage()
+PGMImage::PGMImage(const PGMImage& image) : Image(image)
 {
 	if (this != &image)
 	{
@@ -23,6 +23,7 @@ PGMImage& PGMImage::operator=(const PGMImage& image)
 {
 	if (this != &image)
 	{
+		Image::operator=(image);
 		del();
 		copy(image);
 	}
@@ -108,6 +109,26 @@ void PGMImage::collageHorizontal(std::ostream& out, int index)
 	}
 }
 
+void PGMImage::Monochrome()
+{
+	unsigned short threshold = this->thresHold();
+
+	int pix = 0;
+
+	for (unsigned int i = 0; i < rows; i++)
+	{
+		for (unsigned int j = 0; j < cols; j++)
+		{
+			if (pixels[i][j] > threshold)
+			{
+				pix = colorMax;
+			}
+
+			pixels[i][j] = pix;
+		}
+	}
+}
+
 void PGMImage::Negative()
 {
 	for (unsigned int i = 0; i < this->rows; i++)
@@ -136,6 +157,23 @@ void PGMImage::Rotate(const char* direction)
 	{
 		throw std::exception("Invalid command!");
 	}
+}
+
+unsigned short PGMImage::thresHold()
+{
+	unsigned int sum = 0;
+
+	for (unsigned int i = 0; i < rows; i++)
+	{
+		for (unsigned int j = 0; j < cols; j++)
+		{
+			sum += pixels[i][j];
+		}
+	}
+
+	unsigned short threshold = sum / (rows * cols);
+
+	return threshold;
 }
 
 void PGMImage::rotateRight()
@@ -181,12 +219,12 @@ void PGMImage::rotateRight()
 
 void PGMImage::copy(const PGMImage& image)
 {
-	this->setPath(image.path);
+	/*this->setPath(image.path);
 	this->setMagicNumber(image.magicNumber);
 
 	this->rows = image.rows;
 	this->cols = image.cols;
-	this->colorMax = image.colorMax;
+	this->colorMax = image.colorMax;*/
 
 	this->pixels = new int* [image.rows];
 	for (unsigned int i = 0; i < image.rows; i++)

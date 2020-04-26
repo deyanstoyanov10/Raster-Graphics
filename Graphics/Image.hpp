@@ -10,6 +10,8 @@ class Image
 {
 public:
 	Image(const char* _path = "", const char* _magicNumber = "", unsigned int _rows = 0, unsigned int _cols = 0, unsigned int _colorMax = 0);
+	Image(const Image& image);
+	Image& operator=(const Image& image);
 	virtual ~Image();
 public:
 	virtual Image* clone();

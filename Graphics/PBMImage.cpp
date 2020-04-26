@@ -11,7 +11,7 @@ PBMImage::PBMImage(const char* _path, const char* _magicNumber, unsigned int _ro
 	}
 }
 
-PBMImage::PBMImage(const PBMImage& image) : PBMImage()
+PBMImage::PBMImage(const PBMImage& image) : Image(image)
 {
 	if (this != &image)
 	{
@@ -23,8 +23,8 @@ PBMImage& PBMImage::operator=(const PBMImage& image)
 {
 	if (this != &image)
 	{
-		del();
 		Image::operator=(image);
+		del();
 		copy(image);
 	}
 
@@ -181,12 +181,12 @@ void PBMImage::rotateRight()
 
 void PBMImage::copy(const PBMImage& image)
 {
-	this->setPath(image.path);
+	/*this->setPath(image.path);
 	this->setMagicNumber(image.magicNumber);
 
 	this->rows = image.rows;
 	this->cols = image.cols;
-	this->colorMax = image.colorMax;
+	this->colorMax = image.colorMax;*/
 
 	this->pixels = new int* [image.rows];
 	for (unsigned int i = 0; i < image.rows; i++)

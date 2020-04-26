@@ -21,9 +21,11 @@ public:
 	void saveas(const char* direction) override;
 	void collageHorizontal(std::ostream& out, int index) override;
 
+	void Monochrome() override;
 	void Negative() override;
 	void Rotate(const char* direction) override;
 private:
+	unsigned short thresHold();
 	void rotateRight();
 	void copy(const PGMImage& image);
 	void del();

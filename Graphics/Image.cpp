@@ -8,6 +8,25 @@ Image::Image(const char* _path, const char* _magicNumber, unsigned int _rows, un
 	setMagicNumber(_magicNumber);
 }
 
+Image::Image(const Image& image) : Image()
+{
+	if (this != &image)
+	{
+		del();
+		copy(image);
+	}
+}
+
+Image& Image::operator=(const Image& image)
+{
+	if (this != &image)
+	{
+		del();
+		copy(image);
+	}
+	return *this;
+}
+
 Image::~Image()
 {
 	del();

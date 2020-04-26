@@ -192,7 +192,10 @@ void Session::ManipulateImages(const char* command)
 	}
 	else if (strcmp(command, "monochrome") == 0)
 	{
-
+		for (unsigned int i = 0; i < this->size; i++)
+		{
+			this->images[i]->Monochrome();
+		}
 	}
 	else if (strcmp(command, "negative") == 0)
 	{
