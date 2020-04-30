@@ -137,7 +137,6 @@ void PPMImage::GrayScale()
 
 void PPMImage::Monochrome()
 {
-	this->GrayScale();
 	unsigned short threshold = this->thresHold();
 
 	int pix = 0;
@@ -156,6 +155,8 @@ void PPMImage::Monochrome()
 			pixels[i][j].red = pix;
 			pixels[i][j].green = pix;
 			pixels[i][j].blue = pix;
+
+			pix = 0;
 		}
 	}
 }

@@ -125,6 +125,8 @@ void PGMImage::Monochrome()
 			}
 
 			pixels[i][j] = pix;
+
+			pix = 0;
 		}
 	}
 }
