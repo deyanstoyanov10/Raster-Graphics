@@ -94,7 +94,7 @@ inline Vector<Type>::Vector(unsigned int _capacity)
 }
 
 template<class Type>
-Vector<Type>::Vector(const Vector& vector) : Vector()
+Vector<Type>::Vector(const Vector<Type>& vector) : Vector()
 {
 	if (this != &vector)
 	{
